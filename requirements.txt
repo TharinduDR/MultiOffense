@@ -16,3 +16,4 @@ sklearn
 psutil
 matplotlib==3.4.3
 nltk==3.6.2
+dill
