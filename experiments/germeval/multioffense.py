@@ -12,7 +12,7 @@ set_all_seeds(seed=42)
 device, n_gpu = initialize_device_settings(use_cuda=True)
 batch_size = 8
 lang_model = "bert-base-german-cased"
-data_dir_path = "data"
+data_dir_path = "experiments/germeval/data"
 n_epochs = 3
 evaluate_every = 100
 
