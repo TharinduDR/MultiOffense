@@ -48,7 +48,7 @@ processor.add_task(name="fact_claim", task_type="classification", label_list=["0
 
 data_silo = DataSilo(
     processor=processor,
-    batch_size=batch_size)
+    batch_size=batch_size, max_processes=1)
 
 language_model = LanguageModel.load(lang_model)
 toxic_head = TextClassificationHead(num_labels=2, task_name="toxic")
