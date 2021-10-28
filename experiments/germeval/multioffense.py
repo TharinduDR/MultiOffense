@@ -33,7 +33,8 @@ tcp_params = dict(tokenizer=tokenizer,
 
 processor = TextClassificationProcessor(**tcp_params)
 
-processor.add_task(name="offense", label_list=["0", "1"], metric="f1_macro", text_column_name="comment_text",
+processor.add_task(name="offense", task_type="classification", label_list=["0", "1"], metric="f1_macro",
+                   text_column_name="comment_text",
                    label_column_name="Sub1_Toxic")
 
 data_silo = DataSilo(
