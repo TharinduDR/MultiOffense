@@ -21,20 +21,20 @@ tokenizer = Tokenizer.load(
     do_lower_case=False)
 
 tcp_params = dict(tokenizer=tokenizer,
-                  max_seq_len=8,
+                  max_seq_len=256,
                   data_dir=data_dir_path,
                   train_filename="GermEval21_Toxic_Train.csv",
-                  label_list=["0", "1"],
-                  metric="f1_macro",
                   quote_char='"',
                   dev_filename=None,
                   test_filename=None,
                   dev_split=0.2,
                   delimiter=",",
                   text_column_name="comment_text",
-                  label_column_name="Sub1_Toxic")
+                  )
 
 processor = TextClassificationProcessor(**tcp_params)
+
+processor.add_task(name="offense", label_list=["0", "1"], metric="f1_macro", label_column_name="Sub1_Toxic")
 
 data_silo = DataSilo(
     processor=processor,

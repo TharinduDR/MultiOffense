@@ -493,7 +493,7 @@ class Processor(ABC):
 
 
 class TextClassificationProcessor(Processor):
-    """
+    """max_seq_len
     Used to handle the text classification datasets that come in tabular format (CSV, TSV, etc.)
     """
     def __init__(
