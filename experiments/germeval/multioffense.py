@@ -9,7 +9,7 @@ from farm.train import Trainer
 from farm.utils import set_all_seeds, initialize_device_settings
 
 set_all_seeds(seed=42)
-device, n_gpu = initialize_device_settings(use_cuda=True)
+device, n_gpu = initialize_device_settings(use_cuda=True, local_rank=0)
 batch_size = 8
 lang_model = "bert-base-german-cased"
 data_dir_path = "experiments/germeval/data"
@@ -21,7 +21,7 @@ tokenizer = Tokenizer.load(
     do_lower_case=False)
 
 tcp_params = dict(tokenizer=tokenizer,
-                  max_seq_len=256,
+                  max_seq_len=128,
                   data_dir=data_dir_path,
                   train_filename="GermEval21_Toxic_Train.csv",
                   quote_char='"',
@@ -64,7 +64,7 @@ trainer = Trainer(
     optimizer=optimizer,
     data_silo=data_silo,
     epochs=n_epochs,
-    n_gpu=1,
+    n_gpu=n_gpu,
     lr_schedule=lr_schedule,
     evaluate_every=evaluate_every,
     device=device)
