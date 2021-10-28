@@ -33,20 +33,28 @@ tcp_params = dict(tokenizer=tokenizer,
 
 processor = TextClassificationProcessor(**tcp_params)
 
-processor.add_task(name="offense", task_type="classification", label_list=["0", "1"], metric="f1_macro",
+processor.add_task(name="toxic", task_type="classification", label_list=["0", "1"], metric="f1_macro",
                    text_column_name="comment_text",
                    label_column_name="Sub1_Toxic")
+processor.add_task(name="engaging", task_type="classification", label_list=["0", "1"], metric="f1_macro",
+                   text_column_name="comment_text",
+                   label_column_name="Sub2_Engaging")
+processor.add_task(name="fact_claim", task_type="classification", label_list=["0", "1"], metric="f1_macro",
+                   text_column_name="comment_text",
+                   label_column_name="Sub3_FactClaiming")
 
 data_silo = DataSilo(
     processor=processor,
     batch_size=batch_size)
 
 language_model = LanguageModel.load(lang_model)
-prediction_head = TextClassificationHead(num_labels=2, task_name="offense")
+toxic_head = TextClassificationHead(num_labels=2, task_name="toxic")
+engage_head = TextClassificationHead(num_labels=2, task_name="engaging")
+claim_head = TextClassificationHead(num_labels=2, task_name="fact_claim")
 
 model = AdaptiveModel(
     language_model=language_model,
-    prediction_heads=[prediction_head],
+    prediction_heads=[prediction_head, engage_head, claim_head],
     embeds_dropout_prob=0.1,
     lm_output_types=["per_sequence"],
     device=device)
@@ -55,7 +63,7 @@ model, optimizer, lr_schedule = initialize_optimizer(
     model=model,
     learning_rate=2e-5,
     n_batches=len(data_silo.loaders["train"]),
-    n_epochs=1,
+    n_epochs=n_epochs,
     device=device,
     schedule_opts=None)
 
