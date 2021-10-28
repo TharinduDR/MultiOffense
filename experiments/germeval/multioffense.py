@@ -8,8 +8,11 @@ from farm.modeling.tokenization import Tokenizer
 from farm.train import Trainer
 from farm.utils import set_all_seeds, initialize_device_settings
 
+import torch
+
 set_all_seeds(seed=42)
-device, n_gpu = initialize_device_settings(use_cuda=True)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 batch_size = 8
 lang_model = "bert-base-german-cased"
 data_dir_path = "experiments/germeval/data"
@@ -56,7 +59,7 @@ model = AdaptiveModel(
     language_model=language_model,
     prediction_heads=[toxic_head, engage_head, claim_head],
     embeds_dropout_prob=0.1,
-    lm_output_types=["per_sequence"],
+    lm_output_types=["per_sequence", "per_sequence", "per_sequence"],
     device=device)
 
 model, optimizer, lr_schedule = initialize_optimizer(
