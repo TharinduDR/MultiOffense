@@ -9,7 +9,7 @@ from farm.train import Trainer
 from farm.utils import set_all_seeds, initialize_device_settings
 
 set_all_seeds(seed=42)
-device, n_gpu = initialize_device_settings(use_cuda=True, local_rank=0)
+device, n_gpu = initialize_device_settings(use_cuda=True)
 batch_size = 8
 lang_model = "bert-base-german-cased"
 data_dir_path = "experiments/germeval/data"
