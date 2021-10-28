@@ -54,7 +54,7 @@ claim_head = TextClassificationHead(num_labels=2, task_name="fact_claim")
 
 model = AdaptiveModel(
     language_model=language_model,
-    prediction_heads=[prediction_head, engage_head, claim_head],
+    prediction_heads=[toxic_head, engage_head, claim_head],
     embeds_dropout_prob=0.1,
     lm_output_types=["per_sequence"],
     device=device)
