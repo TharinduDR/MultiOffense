@@ -14,7 +14,7 @@ set_all_seeds(seed=42)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 batch_size = 8
-lang_model = "bert-base-german-cased"
+lang_model = ""
 data_dir_path = "experiments/germeval/data"
 n_epochs = 3
 evaluate_every = 100
